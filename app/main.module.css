@@ -1,0 +1,11 @@
+.header {
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, #00d4ff 100%);
+}
+
+.header_text {
+    background: rgb(2,0,36);
+    background: linear-gradient(0deg, rgb(28, 23, 117) 0%, rgb(15, 15, 145) 25%, rgb(189, 231, 240) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

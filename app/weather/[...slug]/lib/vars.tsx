@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { FaQuestion } from 'react-icons/fa';
-import { WiCloud, WiDaySleet, WiDust, WiFog, WiHail, WiRain, WiRainMix, WiShowers, WiSnowWind } from "react-icons/wi";
+import { WiCloud, WiDaySleet, WiDaySunny, WiDust, WiFog, WiHail, WiRain, WiRainMix, WiRaindrops, WiShowers, WiSnow, WiSnowWind, WiThunderstorm, WiWindy } from "react-icons/wi";
 
 export enum WMOCode {
     DUST = 0,
     RAIN = 1,
-    DRIZZLE = 2,
+    WINDY = 2,
     FOG = 3,
-    PRECIPITATION = 4,
-    ICE = 5,
-    SOLID = 6,
+    DRIZZLE = 4,
+    SNOW = 5,
+    THUNDERSTORM = 6,
     SHOWER = 7,
     CLOUDY = 8,
+    SUNNY = 9,
+    HAIL = 10,
+    UNRECOG = 11,
 }
 
 export class WeatherData {
@@ -36,17 +39,17 @@ export class WeatherData {
     }
 }
 
-async function fetchData() {
+async function fetchData(url: string) {
     const weatherdata = new WeatherData();
 
-    const response = await fetch("http://192.168.0.122:8000/results");
+    const response = await fetch(url);
 
     return response.json();
 }
 
-export async function getData(){
+export async function getData(lat: number, long: number){
     const data = new WeatherData();
-    const json_data = await fetchData();
+    const json_data = await fetchData(constructURL(lat, long));
 
     data.humidity = json_data.hourly.relative_humidity_2m;
     data.cloudcov = json_data.hourly.cloud_cover;
@@ -60,99 +63,200 @@ export async function getData(){
     return data;
 }
 
-export function getWMOText(wmo: number[]){
-    let wmotext: WMOCode[] = [];
+export function getWMOText(wmo: number[]) {
+    let wmoText: WMOCode[] = [];
 
     wmo.map((num) => {
-        if(num < 20 && num >= 0){
-            wmotext.push(WMOCode.CLOUDY);
-        } else if(num >= 20 && num < 30) {
-            wmotext.push(WMOCode.PRECIPITATION);
-        } else if(num >= 30 && num < 40) {
-            wmotext.push(WMOCode.DUST);
-        } else if(num >= 40 && num < 50) {
-            wmotext.push(WMOCode.ICE)
-        } else if(num >= 50 && num < 60) {
-            wmotext.push(WMOCode.DRIZZLE)
-        } else if(num >= 60 && num < 70) {
-            wmotext.push(WMOCode.RAIN);
-        } else if(num >= 70 && num < 80) {
-            wmotext.push(WMOCode.SOLID);
-        } else if(num >= 80 && num < 100) {
-            wmotext.push(WMOCode.SHOWER);
-        }
-    });
+        switch (num) {
+            case 0:
+            case 1:
+            case 2:
+                wmoText.push(WMOCode.SUNNY);
+                break;
 
-    return wmotext;
+            case 3:
+            case 4:
+            case 5:
+            case 12:
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+            case 28:
+            case 29:
+                wmoText.push(WMOCode.CLOUDY);
+                break;
+
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            case 20:
+            case 21:
+            case 22:
+            case 23:
+            case 24:
+            case 25:
+            case 26:
+            case 27:
+            case 90:
+            case 61:
+            case 91:
+                wmoText.push(WMOCode.RAIN);
+                break;
+
+            case 30:
+            case 31:
+            case 36:
+            case 37:
+            case 38:
+                wmoText.push(WMOCode.WINDY);
+                break;
+
+            case 40:
+            case 41:
+            case 42:
+            case 43:
+            case 44:
+            case 45:
+            case 46:
+            case 47:
+            case 48:
+            case 49:
+                wmoText.push(WMOCode.FOG);
+                break;
+
+            case 50:
+            case 51:
+            case 52:
+            case 56:
+            case 57:
+            case 58:
+                wmoText.push(WMOCode.DRIZZLE);
+                break;
+
+            case 80:
+            case 81:
+            case 85:
+            case 86:
+            case 87:
+                wmoText.push(WMOCode.SHOWER);
+                break;
+
+            case 93:
+            case 96:
+            case 97:
+                wmoText.push(WMOCode.THUNDERSTORM);
+                break;
+
+            case 88:
+            case 89:
+                wmoText.push(WMOCode.SNOW);
+                break;
+
+            case 27:
+                wmoText.push(WMOCode.HAIL);
+                break;
+
+            default:
+                wmoText.push(WMOCode.UNRECOG);
+                break;
+        }
+    }, []);
+
+    return wmoText;
 }
 
 export function returnIcon(position: number, size: number, wt: WMOCode[]){
     switch(wt[position]){
-        case 0:
+        case WMOCode.DUST:
             return <WiDust size={size}/>
-        break;
-        case 1:
-            return <WiRain size={"100%"}/>
-        break;
-        case 2:
-            return <WiDaySleet size={size}/>
-        break;
-        case 3:
+            
+        case WMOCode.RAIN:
+            return <WiRain size={size}/>
+            
+        case WMOCode.WINDY:
+            return <WiWindy size={size}/>
+            
+        case WMOCode.FOG:
             return <WiFog size={size}/>
-        break;
-        case 4:
+            
+        case WMOCode.DRIZZLE:
             return <WiRainMix size={size}/>
-        break;
-        case 5:
-            return <WiHail size={size}/>
-        break;
-        case 6:
-            return <WiSnowWind size={size}/>
-        break;
-        case 7:
+            
+        case WMOCode.SNOW:
+            return <WiSnow size={size}/>
+            
+        case WMOCode.THUNDERSTORM:
+            return <WiThunderstorm size={size}/>
+            
+        case WMOCode.SHOWER:
             return <WiShowers size={size}/>
-        break;
-        case 8:
+            
+        case WMOCode.CLOUDY:
             return <WiCloud size={size}/>
-        break;
+            
+        case WMOCode.SUNNY:
+            return <WiDaySunny size={size}/>
+            
+        case WMOCode.HAIL:
+            return <WiHail size={size}/>
+
+        case WMOCode.UNRECOG:
+            return <FaQuestion size={size}/>
+            
         default:
             return <FaQuestion size={size}/>
-        break;
+            
     }
 }
 
 export function returnText(position: number, wt: WMOCode[]){
     switch(wt[position]){
         case 0:
-            return <>Sonnig</>
-        break;
+            return <>Staubig</>
+            
         case 1:
             return <>Regen</>
-        break;
+            
         case 2:
-            return <>Leichter Regen</>
-        break;
+            return <>Windig</>
+            
         case 3:
-            return <>Nebel</>
-        break;
+            return <>Nebelig</>
+            
         case 4:
-            return <>Niederschlag</>
-        break;
+            return <>Nieselregen</>
+            
         case 5:
-            return <>Hagel</>
-        break;
+            return <>Schnee</>
+            
         case 6:
-            return <>Gefrorener Niederschlag</>
-        break;
+            return <>Gewitter</>
+            
         case 7:
             return <>Schauer</>
-        break;
+            
         case 8:
-            return <>Bewölkt</>
-        break;
+            return <>Wolkig</>
+            
+        case 9:
+            return <>Sonnig</>
+            
+        case 10:
+            return <>Hagel</>
+            
+        case 11:
+            return <>NO RECOGNITION</>
+            
         default:
             return <>NO RECOGNITION</>
-        break;
+            
     }
 }
 
@@ -178,4 +282,9 @@ export function detectMobile() {
     return toMatch.some((toMatchItem) => {
         return navigator.userAgent.match(toMatchItem);
     });
+}
+
+export function constructURL(lat: number, long: number){
+    const URL = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + long + "&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m&timezone=Europe%2FBerlin";
+    return(URL);
 }

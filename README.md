@@ -41,3 +41,60 @@ apt install nodejs
 dnf module install nodejs:22/common
 ```
 Für mehr Distros, bitte [hier](https://nodejs.org/en/download/package-manager/all/) nachschlagen.
+
+<br/><br/><br/>
+
+**Schritt 2** - Installieren der Abhänigkeiten
+
+Für dieses Projekt sind mehrere Abhänigkeiten verwendet worden, die vorher installiert werden müssen:
+
+```
+# Next.JS
+npm i next
+
+# React Icons
+npm install react-icons --save
+
+# Tailwind CSS
+npm i tailwindcss
+
+# TypeScript
+npm i typescript
+```
+
+<br/><br/><br/>
+
+**Schritt 3** - Git Installieren
+
+Dies möchte ich jetzt gerne Ihnen überlassen, da es wirklich fast der gleiche Ablauf ist wie im Schritt 1. Einfach [auf der Webseite von GIT](https://git-scm.com/) downloaden oder mit den jeweiligen Package Manager installieren. Für macOS empfehle ich wieder Homebrew.
+
+<br/><br/><br/>
+
+**Schritt 4** - Projekt klonen
+
+PowerShell oder Konsole öffnen und zum Ordner navigieren ([Tutorial Windows](https://www.itprotoday.com/powershell/how-use-powershell-navigate-windows-folder-structure) [Tutorial macOS und/oder Linux](https://appletoolbox.com/navigate-folders-using-the-mac-terminal/))<br/>
+<br/>
+Projekt klonen: ```git clone https://github.com/tobix88/wetter-web-sms-hartberg```<br/><br/>
+Abschließend in den Ordner navigieren.
+
+<br/><br/><br/>
+
+**Schritt 5** - Projekt starten
+
+Ausführen folgender Befehle:<br/>
+```npm build``` - Bitte geduldig sein, könnte etwas dauern!<br/>
+```npm start``` - Und schon läuft der Server auf Ihrem Computer!
+
+<br/><br/><br/>
+
+**Schritt 6** - Benutzen
+
+Einfach den [localhost unter dem port 3000](http://localhost:3000/) in ihrem Browser öffnen (http://localhost:3000/)
+
+<br/><br/><br/>
+
+**Schritt 7** - Server beenden
+
+Um den Server zu beenden, einfach ```STRG + C``` auf **Windows und Linux** drücken, oder
+```Command + . (Punkt)``` auf **macOS** drücken
+### Danke!

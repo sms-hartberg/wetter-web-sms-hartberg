@@ -243,7 +243,7 @@ export function returnText(position: number, wt: WMOCode[]){
             return <>Schauer</>
             
         case 8:
-            return <>Wolkig</>
+            return <>Bewölkt</>
             
         case 9:
             return <>Sonnig</>
@@ -287,4 +287,41 @@ export function detectMobile() {
 export function constructURL(lat: number, long: number){
     const URL = "https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + long + "&hourly=temperature_2m,relative_humidity_2m,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m&timezone=Europe%2FBerlin";
     return(URL);
+}
+
+export function getMinMaxTemp(temperature: number[], day: number, max: boolean){
+    let maxTemp, minTemp, range;
+    let temperatures: number[] = [];
+
+    switch(day){
+        case 0:
+            range = [0, 23];
+            break;
+
+        case 1:
+            range = [24, 47]
+            break;
+        
+        case 2:
+            range = [48, 71]
+            break;
+        
+        case 3:
+            range = [72, 95];
+            break;
+
+        case 4:
+            range = [96, 119]
+            break;
+
+        default:
+            range = [0, 23];
+            break;
+    }
+
+    for(let i = range[0]; i <= range[1]; i++){
+        temperatures.push(temperature[i]);
+    }
+    
+    return max ? Math.max(...temperatures) : Math.min(...temperatures);
 }

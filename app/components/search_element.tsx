@@ -32,7 +32,7 @@ const SearchElement = () => {
     };
 
     return (
-        <div className='p-5 h-[30vh] w-[50vw] max-h-[100%] max-w-[100%] flex flex-col justify-center items-center bg-slate-700 rounded-3xl bg-opacity-80'>
+        <div className='p-5 h-[30vh] min-w-[50vw] max-h-[100%] max-w-[100%] flex flex-col justify-center items-center bg-slate-700 rounded-3xl bg-opacity-80'>
             <div className='flex flex-row w-[100%]'>
                 <input className={'focus:outline-none p-2 rounded-lg bg-gray-100 flex-grow font-poppins'} title='City Search' placeholder='Nach Stadt oder Ort suchen...' onChange={(e) => {setTextVal(e.target.value)}} onKeyDown={(e) => {
                     if(e.key === "Enter"){

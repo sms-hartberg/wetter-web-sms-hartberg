@@ -2,10 +2,11 @@
 
 import Background from '@/app/components/bg_element';
 import React, { useEffect, useState } from 'react';
-import { WeatherData, getData, replacePlus } from "./lib/vars";
-import { getWMOText, WMOCode, returnIcon, returnText, getMinMaxTemp } from "./lib/vars";
+import { WeatherData, getData, replacePlus } from "./api/functions";
+import { getWMOText, WMOCode, returnIcon, returnText, getMinMaxTemp } from "./api/functions";
 import styles from "./page.module.css";
 import WeatherPanelSmall from './components/weather-panel-s';
+import Logo from '@/app/components/logo';
 
 export default function WeatherPage({ params }: { params: { slug: string[]}}){
 
@@ -27,7 +28,11 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
 
     return (
         <div className="font-poppins h-screen flex justify-center items-center flex-col">
-            <div className={"max-h-[80vh] absolute z-2 flex-col flex items-center overflow-y-scroll rounded-md " + styles.scrollbar}>
+            <div className='max-h-screen'>
+                <Logo/>
+                <Background/>
+            </div>
+            <div className={"max-h-[80vh] absolute flex-col flex items-center overflow-y-scroll rounded-md " + styles.scrollbar}>
                 <div className="flex font-bold text-[3vh] drop-shadow-xl mb-6 justify-center items-center flex-wrap">
                     Fünftages-Vorraussage für&nbsp;<div className='text-green-400'>{replacePlus(name)}</div>
                 </div>

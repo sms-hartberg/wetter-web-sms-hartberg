@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp } from '../lib/vars'
+import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp } from '../api/functions'
 
 interface componentProps {
     data: WeatherData,

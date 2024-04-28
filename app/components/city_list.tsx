@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useRouter } from "next/navigation";
-import { removeUmlaut } from '../weather/[...slug]/lib/vars';
+import { removeUmlaut } from '../weather/[...slug]/api/functions';
 
 interface elementProps {
     json: any,
@@ -32,15 +32,15 @@ const CityList = ({ json } : elementProps) => {
     };
 
     const resultDivs = json.results.map((result: resultItem, index: number) => (
-        <button key={index} className="font-normal flex flex-row bg-gray-800 p-2 mb-2 rounded-lg hover:bg-gray-700 active:bg-gray-900" onClick={() => {handleLocationClick(index)}}>
-            <div className='flex-grow flex-row text-left'>{result.name}</div>
+        <button key={index} className="font-normal flex flex-row bg-gray-800 p-2 mb-2 rounded-lg hover:bg-gray-700 active:bg-gray-900 flex-wrap" onClick={() => {handleLocationClick(index)}}>
+            <div className='flex-grow flex-row text-left pr-4'>{result.name}</div>
             {result.admin2 ? <div className='flex-grow text-center flex-row'>{result.admin2}</div> : (result.admin1 && <div className='flex-grow text-center'>{result.admin1}</div>)}
-            <div className='flex-grow text-right flex-row'>{result.country}</div>
+            <div className='flex-grow text-right flex-row pl-4'>{result.country}</div>
         </button>
     ));
 
     return (
-        <div className='flex flex-col overflow-hidden w-[100%] mb-4'>
+        <div className='flex flex-col overflow-hidden w-full'>
             {resultDivs}
         </div>
     )

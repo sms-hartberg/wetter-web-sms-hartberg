@@ -38,7 +38,7 @@ const WeatherPanelSmall = ({ data, day, wmoText } : componentProps) => {
                 setDayText("UNAVAILABLE");
                 setDayIndex(0);
         }
-    }, []);
+    }, [day]);
 
     return (
         <div className='flex flex-col max-w-full w-full bg-slate-700 bg-opacity-80 rounded-2xl p-4 mt-4'>

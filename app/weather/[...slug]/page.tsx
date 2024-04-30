@@ -16,15 +16,15 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
     const [data, setData] = useState<WeatherData | null>(null);
     const [wmotext, setWmotext] = useState<WMOCode[]>([]);
 
-    const fetch = async () => {
+    const fetchData = async () => {
         const fetchedData = await getData(lat, long);
         setData(fetchedData)
         setWmotext(getWMOText(fetchedData.wmo));
     };
 
     useEffect(() => {
-        fetch();
-    }, []);
+        fetchData();
+    }, [fetchData]);
 
     return (
         <div className="font-poppins h-screen flex justify-center items-center flex-col">

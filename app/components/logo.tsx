@@ -12,7 +12,7 @@ const Logo = () => {
     }
 
     return (
-        <div className={"flex justify-center text-4xl pt-4 font-poppins header pb-4 " + styles.header}>
+        <div className={"flex justify-center text-4xl pt-4 font-poppins header pb-4 w-screen " + styles.header}>
             <button className={styles.header_text + " h-full flex justify-center items-center"} onClick={handleClick}>{"{ WEATHER Web }"}</button>
         </div>
     )

@@ -6,15 +6,17 @@ import Footer from "./components/footer";
 
 export default function Home() {
   return (
-    <main className="h-[100vh] w-[100vw] flex flex-col overflow-hidden">
-      <div className="z-[3]">
+    <main className="h-screen w-screen flex flex-col overflow-hidden">
+      <div className="z-[2]">
         <Logo/>
       </div>
-      <Background/>
-      <div className={"absolute flex flex-col justify-center items-center align-middle w-[100vw] h-[100vh] z-[2] overflow-hidden"}>
-        <SearchElement/>
+      <div className="absolute flex h-screen w-screen flex-col justify-center items-center">      
+        <div className={"flex flex-col justify-center items-center align-middle overflow-hidden h-full"}>
+          <SearchElement/>
+        </div>
+        <Footer/>
       </div>
-      <Footer/>
+      <Background/>
     </main>
   );
 }

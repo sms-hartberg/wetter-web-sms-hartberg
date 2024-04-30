@@ -1,7 +1,5 @@
 import React from 'react';
 import Image from "next/image";
-import styles from "../main.module.css"
-import routeSearch from './api/functions';
 
 const Background = () => {
   return (

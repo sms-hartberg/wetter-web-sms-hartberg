@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState } from 'react'
-import styles from "../main.module.css";
 import CityList from './city_list';
-import Logo from './logo';
 
 const SearchElement = () => {
     const [textVal, setTextVal] = useState("");

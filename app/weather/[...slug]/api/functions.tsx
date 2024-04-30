@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaQuestion } from 'react-icons/fa';
-import { WiCloud, WiDaySleet, WiDaySunny, WiDust, WiFog, WiHail, WiRain, WiRainMix, WiRaindrops, WiShowers, WiSnow, WiSnowWind, WiThunderstorm, WiWindy } from "react-icons/wi";
+import { WiCloud, WiDaySunny, WiDust, WiFog, WiHail, WiRain, WiRainMix, WiRaindrops, WiShowers, WiSnow, WiSnowWind, WiThunderstorm, WiWindy } from "react-icons/wi";
 
 export enum WMOCode {
     DUST = 0,

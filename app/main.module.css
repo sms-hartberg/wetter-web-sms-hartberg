@@ -14,8 +14,7 @@
     color: rgb(37 99 235);
 }
 
-.grid_impressum {
-    display: grid;
-    grid-row: 3;
-    grid-template-rows: min-content 1fr min-content;
+.impressum {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
 }

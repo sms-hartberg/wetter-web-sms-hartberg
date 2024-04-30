@@ -2,6 +2,7 @@ import styles from "./main.module.css";
 import SearchElement from "./components/search_element";
 import Background from "./components/bg_element";
 import Logo from "./components/logo";
+import Footer from "./components/footer";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <div className={"absolute flex flex-col justify-center items-center align-middle w-[100vw] h-[100vh] z-[2] overflow-hidden"}>
         <SearchElement/>
       </div>
+      <Footer/>
     </main>
   );
 }

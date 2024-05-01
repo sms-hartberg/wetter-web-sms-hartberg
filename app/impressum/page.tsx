@@ -2,16 +2,15 @@ import React from 'react'
 import Footer from '../components/footer'
 import Logo from '../components/logo'
 import styles from "../main.module.css"
-import body_styles from "./body_styles.module.css"
 
-const page = () => {
+const Impressum = () => {
     return (
-        <main className={'h-[100dvh] max-h-[100dvh] w-[100dvw] flex flex-col items-center'}>
+        <main className={'h-[100dvh] max-h-[100dvh] w-[100dvw] flex flex-col items-center bg-[#00d4ff]'}>
             <div>
                 <Logo/>
             </div>
-            <div className='flex flex-col justify-center items-center max-w-[75%] w-[75%] max-h-full pt-8 pb-8'>
-                <div className='overflow-y-scroll flex flex-col'>   
+            <div className='flex flex-col max-w-[75%] w-[75%] max-h-full h-full mt-16 mb-16 overflow-y-scroll'>
+                <div className='m-auto'>
                     <p className='font-extrabold text-4xl'>
                         IMPRESSUM
                     </p>
@@ -33,7 +32,7 @@ const page = () => {
                             Die SVG-Icons auf der Ergebnisseite, die unter anderem die Wetterbedingungen bildlich veranschaulichen, werden vom Projekt <a href="https://github.com/react-icons/react-icons">React Icons</a> verwendet
                             und sind laut Lizenz frei verwendbar.
                             <br/><br/>
-                            Die Inhalte und externe Links sowie externe Hyperlinks auf dieser Webseite wurden sorgfältig untersucht, jedoch übernehmen Ersteller sowie Betreiber dieser Webseite KEINE Haftung für diese. Für die verlinkten
+                            Die Inhalte und externen Links sowie externen Hyperlinks auf dieser Webseite wurden sorgfältig untersucht, jedoch übernehmen Ersteller sowie Betreiber dieser Webseite KEINE Haftung für diese. Für die verlinkten
                             Inhalte sind ausschließlich deren Betreiber verantwortlich.
                         </p>
                     </div>
@@ -46,4 +45,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Impressum

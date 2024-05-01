@@ -3,40 +3,36 @@ import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp } from '../
 
 interface componentProps {
     data: WeatherData,
+    avgData: WeatherData,
     day: number,
     wmoText: WMOCode[],
 }
 
-const WeatherPanelSmall = ({ data, day, wmoText } : componentProps) => {
+const WeatherPanelSmall = ({ data, avgData, day, wmoText } : componentProps) => {
 
     const [dayText, setDayText] = useState("UNAVAILABLE");
-    const [dayIndex, setDayIndex] = useState(0);
 
     useEffect(() => {
         switch(day){
-            case 36:
+            case 1:
                 setDayText("MORGEN");
-                setDayIndex(1);
                 break;
             
-            case 60:
+            case 2:
                 setDayText("ÜBERMORGEN");
-                setDayIndex(2);
                 break;
             
-            case 84:
+            case 3:
                 setDayText("IN DREI TAGEN");
-                setDayIndex(3);
                 break;
     
-            case 108:
+            case 4:
                 setDayText("IN VIER TAGEN");
-                setDayIndex(4);
                 break;
     
             default:
                 setDayText("UNAVAILABLE");
-                setDayIndex(0);
+                break;
         }
     }, [day]);
 
@@ -47,14 +43,14 @@ const WeatherPanelSmall = ({ data, day, wmoText } : componentProps) => {
             </div>
             <div className='flex flex-col text-xl font-semibold text-gray-300'>
                 <div className='max-w-full w-full flex'>
-                    Regen: {data?.preciprob[day]} %<br/>
-                    Wind: {data?.windspeed[day]} km/h<br/>
-                    Wolken: {data?.cloudcov[day]} %<br/>
-                    Regenmenge: {data?.precip[day]} mm<br/>
-                    Luftfeuchte: {data?.humidity[day]} %<br/>
+                    Regen: {avgData?.preciprob[day]} %<br/>
+                    Wind: {avgData?.windspeed[day]} km/h<br/>
+                    Wolken: {avgData?.cloudcov[day]} %<br/>
+                    Regenmenge: {avgData?.precip[day]} mm<br/>
+                    Luftfeuchte: {avgData?.humidity[day]} %<br/>
                 </div>
                 <div className='flex flex-row justify-center items-center text-4xl'>
-                    <div className='p-3 text-4xl text-red-400'>{getMinMaxTemp(data.temperature, dayIndex, true)}</div> <div className='p-4 text-2xl text-blue-400'>{getMinMaxTemp(data.temperature, dayIndex, false)}</div> °C
+                    <div className='p-3 text-4xl text-red-400'>{getMinMaxTemp(data.temperature, day, true)}</div> <div className='p-4 text-2xl text-blue-400'>{getMinMaxTemp(data.temperature, day, false)}</div> °C
                 </div>
                 <div className='flex flex-row'>
                     <div className='flex items-center justify-center'>

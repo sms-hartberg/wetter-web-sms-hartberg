@@ -1,6 +1,8 @@
+type int = number;
+
 import React, { useState } from 'react'
 import { FaQuestion } from 'react-icons/fa';
-import { WiCloud, WiDaySunny, WiDust, WiFog, WiHail, WiRain, WiRainMix, WiRaindrops, WiShowers, WiSnow, WiSnowWind, WiThunderstorm, WiWindy } from "react-icons/wi";
+import { WiCloud, WiDaySunny, WiDust, WiFog, WiHail, WiRain, WiRainMix, WiShowers, WiSnow, WiThunderstorm, WiWindy } from "react-icons/wi";
 
 export enum WMOCode {
     DUST = 0,
@@ -18,33 +20,18 @@ export enum WMOCode {
 }
 
 export class WeatherData {
-    public preciprob: number[];
-    public cloudcov: number[];
-    public temperature: number[];
-    public humidity: number[];
-    public precip: number[];
-    public windspeed: number[];
-    public time: number[];
-    public wmo: number[];
-
-    constructor() {
-        this.preciprob = [];
-        this.cloudcov = [];
-        this.temperature = [];
-        this.humidity = [];
-        this.precip = [];
-        this.windspeed = [];
-        this.time = [];
-        this.wmo = [];
-    }
+    public preciprob: number[] = [];
+    public cloudcov: number[] = [];
+    public temperature: number[] = [];
+    public humidity: number[] = [];
+    public precip: number[] = [];
+    public windspeed: number[] = [];
+    public time: number[] = [];
+    public wmo: number[] = [];
 }
 
 async function fetchData(url: string) {
-    const weatherdata = new WeatherData();
-
-    const response = await fetch(url);
-
-    return response.json();
+    return (await fetch(url)).json();
 }
 
 export async function getData(lat: number, long: number){
@@ -290,7 +277,7 @@ export function constructURL(lat: number, long: number){
 }
 
 export function getMinMaxTemp(temperature: number[], day: number, max: boolean){
-    let maxTemp, minTemp, range;
+    let range;
     let temperatures: number[] = [];
 
     switch(day){
@@ -324,4 +311,46 @@ export function getMinMaxTemp(temperature: number[], day: number, max: boolean){
     }
     
     return max ? Math.max(...temperatures) : Math.min(...temperatures);
+}
+
+export function getAverageValue(weatherData: WeatherData): WeatherData{
+    let outputData: WeatherData = new WeatherData();
+
+    for(let i = 0; i < 5; i++){
+        for(const key in weatherData) {
+            if (Array.isArray(weatherData[key as keyof WeatherData])) {
+                const dayArray = cutDay(weatherData[key as keyof WeatherData], i);
+                const average = calculateAverage(dayArray);
+                (outputData[key as keyof WeatherData] as number[]).push(average);
+            }
+        }
+    }
+
+    return outputData;
+}
+
+function calculateAverage(array: number[]){
+    return Math.round(array.reduce((accu, val) => {
+        return accu + val;
+    }, 0) / array.length);
+}
+
+function cutDay(array: number[], dayIndex: number){
+    let outputArray: number[] = [];
+
+    const startingValMap: { [key: number]: number } = {
+        0: 0,
+        1: 24,
+        2: 48,
+        3: 72,
+        4: 96
+    };
+    
+    let startingVal = startingValMap[dayIndex] || 0;
+    
+    for(let i = startingVal; i < startingVal + 24; i++){
+        outputArray.push(array[i]);
+    }
+
+    return outputArray;
 }

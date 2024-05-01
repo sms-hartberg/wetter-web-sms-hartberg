@@ -39,7 +39,7 @@ const SearchElement = () => {
                 <button className={'pt-2 pb-2 pl-4 pr-4 mt-4 bg-blue-500 rounded-lg hover:bg-blue-600 active:bg-blue-500 font-poppins w-full'} onClick={handleSearch}>Suchen</button>
             </div>
             <div className='w-[100%] mt-4 flex-grow flex justify-center items-start max-h-[100%] max-w-[100%] font-poppins text-xl text-gray-300 font-bold overflow-y-auto rounded-lg'>
-                {foundSth ? <CityList json={json}/> : <div className='flex flex-grow justify-center items-center h-[100%]'>Keine Städte mit diesem Namen gefunden!</div>}
+                {foundSth ? <CityList json={json}/> : <div className='flex flex-grow justify-center items-center h-[100%]'>Keine Orte mit diesem Namen gefunden!</div>}
             </div>
         </div>
     )

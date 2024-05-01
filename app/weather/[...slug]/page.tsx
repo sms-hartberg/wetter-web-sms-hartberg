@@ -3,10 +3,11 @@
 import Background from '@/app/components/bg_element';
 import React, { useEffect, useState } from 'react';
 import { WeatherData, getData, replacePlus } from "./api/functions";
-import { getWMOText, WMOCode, returnIcon, returnText, getMinMaxTemp } from "./api/functions";
+import { getWMOText, WMOCode, returnIcon, returnText, getMinMaxTemp, getAverageValue } from "./api/functions";
 import styles from "./page.module.css";
 import WeatherPanelSmall from './components/weather-panel-s';
 import Logo from '@/app/components/logo';
+import Footer from '@/app/components/footer';
 
 export default function WeatherPage({ params }: { params: { slug: string[]}}){
 
@@ -14,27 +15,29 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
     const lat: number = parseFloat(latStr);
     const long: number = parseFloat(longStr);
     const [data, setData] = useState<WeatherData | null>(null);
+    const [avgData, setAvgData] = useState<WeatherData | null>(null);
     const [wmotext, setWmotext] = useState<WMOCode[]>([]);
 
     const fetchData = async () => {
         const fetchedData = await getData(lat, long);
-        setData(fetchedData)
+        setData(fetchedData);
         setWmotext(getWMOText(fetchedData.wmo));
+        setAvgData(getAverageValue(fetchedData));
     };
 
     useEffect(() => {
         fetchData();
-    }, [fetchData]);
+    }, []);
 
     return (
-        <div className="font-poppins h-screen flex justify-center items-center flex-col">
-            <div className='max-h-screen'>
+        <div className="font-poppins h-[100dvh] flex justify-center items-center flex-col">
+            <div className='h-full'>
                 <Logo/>
                 <Background/>
             </div>
-            <div className={"max-h-[80vh] absolute flex-col flex items-center overflow-y-scroll rounded-md " + styles.scrollbar}>
-                <div className="flex font-bold text-[3vh] drop-shadow-xl mb-6 justify-center items-center flex-wrap">
-                    Fünftages-Vorraussage für&nbsp;<div className='text-green-400'>{replacePlus(name)}</div>
+            <div className={"max-h-[85dvh] absolute flex-col flex items-center overflow-y-scroll rounded-md " + styles.scrollbar}>
+                <div className="flex font-bold text-[3vh] drop-shadow-xl mb-6 items-center flex-wrap">
+                    Fünftages-Vorraussage für&nbsp;<div className='text-green-700'>{replacePlus(name)}</div>
                 </div>
                 <div className="max-h-full max-w-[75vw] w-[75vw]">
                     <div className="max-h-screen w-full flex justify-center items-end">
@@ -42,11 +45,11 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
                             <div className="text-2xl font-bold text-gray-300 pb-4">HEUTE</div>
                             <div className="flex flex-col text-xl font-semibold text-gray-300">
                                 <div className="max-w-full w-full flex">
-                                    Regen: {data?.preciprob[12]} %<br />
-                                    Wind: {data?.windspeed[12]} km/h<br />
-                                    Wolken: {data?.cloudcov[12]} %<br />
-                                    Regenmenge: {data?.precip[12]} mm<br />
-                                    Luftfeuchte: {data?.humidity[12]} %<br />
+                                    Regen: {avgData?.preciprob[0]} %<br />
+                                    Wind: {avgData?.windspeed[0]} km/h<br />
+                                    Wolken: {avgData?.cloudcov[0]} %<br />
+                                    Regenmenge: {avgData?.precip[0]} mm<br />
+                                    Luftfeuchte: {avgData?.humidity[0]} %<br />
                                 </div>
                                 <div className="flex flex-row justify-center items-center text-4xl">
                                     {data !== null && (
@@ -70,14 +73,15 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
                         </div>
                     </div>
                     <div className="max-w-full max-h-full flex flex-col items-start mt-24">
-                        {data !== null && <WeatherPanelSmall data={data} day={36} wmoText={wmotext}></WeatherPanelSmall>}
-                        {data !== null && <WeatherPanelSmall data={data} day={60} wmoText={wmotext}></WeatherPanelSmall>}
-                        {data !== null && <WeatherPanelSmall data={data} day={84} wmoText={wmotext}></WeatherPanelSmall>}
-                        {data !== null && <WeatherPanelSmall data={data} day={108} wmoText={wmotext}></WeatherPanelSmall>}
+                        {Array.from({ length: 4 }, (_, index) => (
+                            avgData !== null && data !== null && <WeatherPanelSmall key={index} data={data} avgData={avgData} day={index + 1} wmoText={wmotext}></WeatherPanelSmall>
+                        ))}
                     </div>
                 </div>
             </div>
-            <Background/>
+            <div className='absolute z-[2] bottom-0'>
+                <Footer/>
+            </div>
         </div>
     )
 }

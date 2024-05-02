@@ -82,7 +82,7 @@ Abschließend in den Ordner navigieren.
 **Schritt 5** - Projekt starten
 
 Ausführen folgender Befehle:<br/>
-```npm build``` - Bitte geduldig sein, könnte etwas dauern!<br/>
+```npm run build``` - Bitte geduldig sein, könnte etwas dauern!<br/>
 ```npm start``` - Und schon läuft der Server auf Ihrem Computer!
 
 <br/><br/><br/>

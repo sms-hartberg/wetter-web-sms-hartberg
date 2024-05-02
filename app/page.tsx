@@ -3,6 +3,7 @@ import SearchElement from "./components/search_element";
 import Background from "./components/bg_element";
 import Logo from "./components/logo";
 import Footer from "./components/footer";
+import CookieBanner from "./components/cookies";
 
 export default function Home() {
   return (
@@ -17,6 +18,8 @@ export default function Home() {
         <Footer/>
       </div>
       <Background/>
+
+      <CookieBanner/>
     </main>
   );
 }

@@ -159,8 +159,8 @@ export function getWMOText(wmo: number[]) {
     return wmoText;
 }
 
-export function returnIcon(position: number, size: number, wt: WMOCode[]){
-    switch(wt[position]){
+export function returnIcon(num: number, size: number){
+    switch(num){
         case WMOCode.DUST:
             return <WiDust size={size}/>
             
@@ -203,8 +203,8 @@ export function returnIcon(position: number, size: number, wt: WMOCode[]){
     }
 }
 
-export function returnText(position: number, wt: WMOCode[]){
-    switch(wt[position]){
+export function returnText(num: number){
+    switch(num){
         case 0:
             return <>Staubig</>
             
@@ -276,35 +276,31 @@ export function constructURL(lat: number, long: number){
     return(URL);
 }
 
-export function getMinMaxTemp(temperature: number[], day: number, max: boolean){
-    let range;
-    let temperatures: number[] = [];
-
+function getRange(day: number): number[]{
     switch(day){
         case 0:
-            range = [0, 23];
-            break;
+            return [0, 23];
 
         case 1:
-            range = [24, 47]
-            break;
+            return [24, 47];
         
         case 2:
-            range = [48, 71]
-            break;
+            return [48, 71];
         
         case 3:
-            range = [72, 95];
-            break;
+            return [72, 95];
 
         case 4:
-            range = [96, 119]
-            break;
+            return [96, 119];
 
         default:
-            range = [0, 23];
-            break;
+            return [0, 23];
     }
+}
+
+export function getMinMaxTemp(temperature: number[], day: number, max: boolean){
+    const range = getRange(day);
+    let temperatures: number[] = [];
 
     for(let i = range[0]; i <= range[1]; i++){
         temperatures.push(temperature[i]);
@@ -353,4 +349,27 @@ function cutDay(array: number[], dayIndex: number){
     }
 
     return outputArray;
+}
+
+export function getAverageWMO(wmocode: WMOCode[], day: number): WMOCode {
+    const array = cutDay(wmocode, day);
+    
+    const counts: { [key: number]: number} = {};
+
+    for(const num of array) {
+        counts[num] = (counts[num] || 0) + 1;
+    }
+
+    let highestCount: number = 0;
+    let mostCommonNumber: number = 0;
+    for(const num in counts) {
+        if(counts.hasOwnProperty(num)) {
+            if(counts[num] > highestCount) {
+                highestCount = counts[num];
+                mostCommonNumber = parseInt(num);
+            }
+        }
+    }
+    
+    return mostCommonNumber;
 }

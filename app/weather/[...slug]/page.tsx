@@ -3,7 +3,7 @@
 import Background from '@/app/components/bg_element';
 import React, { useEffect, useState } from 'react';
 import { WeatherData, getData, replacePlus } from "./api/functions";
-import { getWMOText, WMOCode, returnIcon, returnText, getMinMaxTemp, getAverageValue } from "./api/functions";
+import { getWMOText, WMOCode, returnIcon, returnText, getMinMaxTemp, getAverageValue, getAverageWMO } from "./api/functions";
 import styles from "./page.module.css";
 import WeatherPanelSmall from './components/weather-panel-s';
 import Logo from '@/app/components/logo';
@@ -65,9 +65,9 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
                                     )}
                                 </div>
                                 <div className="flex flex-row">
-                                    <div className="flex items-center justify-center">{returnIcon(12, 75, wmotext)}</div>
-                                    <div className="flex items-center justify-center w-[100%] text-3xl">{returnText(12, wmotext)}</div>
-                                    <div className="flex items-center justify-center">{returnIcon(12, 75, wmotext)}</div>
+                                    <div className="flex items-center justify-center">{returnIcon(getAverageWMO(wmotext, 0), 75)}</div>
+                                    <div className="flex items-center justify-center w-[100%] text-3xl">{returnText(getAverageWMO(wmotext, 0))}</div>
+                                    <div className="flex items-center justify-center">{returnIcon(getAverageWMO(wmotext, 0), 75)}</div>
                                 </div>
                             </div>
                         </div>

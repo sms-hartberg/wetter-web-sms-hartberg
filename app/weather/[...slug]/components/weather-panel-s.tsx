@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp } from '../api/functions'
+import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp, getAverageWMO } from '../api/functions'
 
 interface componentProps {
     data: WeatherData,
@@ -54,13 +54,13 @@ const WeatherPanelSmall = ({ data, avgData, day, wmoText } : componentProps) => 
                 </div>
                 <div className='flex flex-row'>
                     <div className='flex items-center justify-center'>
-                        {returnIcon(day, 75, wmoText)}
+                        {returnIcon(getAverageWMO(wmoText, 0), 75)}
                     </div>
                     <div className='flex items-center justify-center w-[100%] text-3xl'>
-                        {returnText(day, wmoText)}
+                        {returnText(getAverageWMO(wmoText, 0))}
                     </div>
                     <div className='flex items-center justify-center'>
-                        {returnIcon(day, 75, wmoText)}
+                        {returnIcon(getAverageWMO(wmoText, 0), 75)}
                     </div>
                 </div>
             </div>

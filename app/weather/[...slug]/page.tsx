@@ -73,7 +73,7 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
                         </div>
                     </div>
                     <div className="max-w-full max-h-full flex flex-col items-start mt-24">
-                        {Array.from({ length: 4 }, (_, index) => (
+                        {Array.from({ length: 6 }, (_, index) => (
                             avgData !== null && data !== null && <WeatherPanelSmall key={index} data={data} avgData={avgData} day={index + 1} wmoText={wmotext}></WeatherPanelSmall>
                         ))}
                     </div>

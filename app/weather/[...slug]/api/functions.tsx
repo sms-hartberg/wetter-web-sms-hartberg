@@ -26,7 +26,7 @@ export class WeatherData {
     public humidity: number[] = [];
     public precip: number[] = [];
     public windspeed: number[] = [];
-    public time: number[] = [];
+    public time: string[] = [];
     public wmo: number[] = [];
 }
 
@@ -293,6 +293,12 @@ function getRange(day: number): number[]{
         case 4:
             return [96, 119];
 
+        case 5:
+            return [120, 143];
+
+        case 6:
+            return [144, 167];
+
         default:
             return [0, 23];
     }
@@ -312,9 +318,10 @@ export function getMinMaxTemp(temperature: number[], day: number, max: boolean){
 export function getAverageValue(weatherData: WeatherData): WeatherData{
     let outputData: WeatherData = new WeatherData();
 
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < 7; i++){
         for(const key in weatherData) {
-            if (Array.isArray(weatherData[key as keyof WeatherData])) {
+            if (key !== "time" && Array.isArray(weatherData[key as keyof WeatherData])) {
+                // @ts-ignore
                 const dayArray = cutDay(weatherData[key as keyof WeatherData], i);
                 const average = calculateAverage(dayArray);
                 (outputData[key as keyof WeatherData] as number[]).push(average);
@@ -331,18 +338,24 @@ function calculateAverage(array: number[]){
     }, 0) / array.length);
 }
 
-function cutDay(array: number[], dayIndex: number){
-    let outputArray: number[] = [];
-
+export function getStartingVal(dayIndex: number) : number{
     const startingValMap: { [key: number]: number } = {
         0: 0,
         1: 24,
         2: 48,
         3: 72,
-        4: 96
+        4: 96,
+        5: 120,
+        6: 144,
     };
     
-    let startingVal = startingValMap[dayIndex] || 0;
+    return startingValMap[dayIndex] || 0;
+};
+
+function cutDay(array: number[], dayIndex: number){
+    let outputArray: number[] = [];
+
+    let startingVal = getStartingVal(dayIndex);
     
     for(let i = startingVal; i < startingVal + 24; i++){
         outputArray.push(array[i]);
@@ -372,4 +385,18 @@ export function getAverageWMO(wmocode: WMOCode[], day: number): WMOCode {
     }
     
     return mostCommonNumber;
+}
+
+export function getDate(dayIndex: number, data: WeatherData): string {
+    let startingVal = getStartingVal(dayIndex);
+    
+    return(formatDate(data.time.at(startingVal)!));
+}
+
+function formatDate(unformattedDate: string){
+    unformattedDate = unformattedDate.substring(0, unformattedDate.indexOf("T"));
+    let dateArray = unformattedDate.split("-");
+    let formattedDate = dateArray.at(2) + "." + dateArray.at(1) + "." + dateArray.at(0);
+
+    return formattedDate;
 }

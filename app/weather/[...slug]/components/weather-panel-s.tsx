@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp, getAverageWMO } from '../api/functions'
+import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp, getAverageWMO, getDate } from '../api/functions'
 
 interface componentProps {
     data: WeatherData,
@@ -10,36 +10,27 @@ interface componentProps {
 
 const WeatherPanelSmall = ({ data, avgData, day, wmoText } : componentProps) => {
 
-    const [dayText, setDayText] = useState("UNAVAILABLE");
+    const [dayText, setDayText] = useState("");
+    const [date, setDate] = useState("01.01.1970");
 
     useEffect(() => {
         switch(day){
             case 1:
                 setDayText("MORGEN");
                 break;
-            
-            case 2:
-                setDayText("ÜBERMORGEN");
-                break;
-            
-            case 3:
-                setDayText("IN DREI TAGEN");
-                break;
-    
-            case 4:
-                setDayText("IN VIER TAGEN");
-                break;
     
             default:
                 setDayText("UNAVAILABLE");
                 break;
         }
-    }, [day]);
+
+        setDate(getDate(day ,data));
+    }, [day, data]);
 
     return (
         <div className='flex flex-col max-w-full w-full bg-slate-700 bg-opacity-80 rounded-2xl p-4 mt-4'>
             <div className='text-2xl font-bold text-gray-300 pb-4'>
-                {dayText}
+                {dayText !== "UNAVAILABLE" ? <>{dayText}&nbsp;|&nbsp;{date}</> : <>{date}</>}
             </div>
             <div className='flex flex-col text-xl font-semibold text-gray-300'>
                 <div className='max-w-full w-full flex'>
@@ -54,13 +45,13 @@ const WeatherPanelSmall = ({ data, avgData, day, wmoText } : componentProps) => 
                 </div>
                 <div className='flex flex-row'>
                     <div className='flex items-center justify-center'>
-                        {returnIcon(getAverageWMO(wmoText, 0), 75)}
+                        {returnIcon(getAverageWMO(wmoText, day), 75)}
                     </div>
                     <div className='flex items-center justify-center w-[100%] text-3xl'>
-                        {returnText(getAverageWMO(wmoText, 0))}
+                        {returnText(getAverageWMO(wmoText, day))}
                     </div>
                     <div className='flex items-center justify-center'>
-                        {returnIcon(getAverageWMO(wmoText, 0), 75)}
+                        {returnIcon(getAverageWMO(wmoText, day), 75)}
                     </div>
                 </div>
             </div>

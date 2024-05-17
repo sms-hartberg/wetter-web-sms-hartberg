@@ -36,8 +36,8 @@ export default function WeatherPage({ params }: { params: { slug: string[]}}){
                 <Background/>
             </div>
             <div className={"max-h-[85dvh] absolute flex-col flex items-center overflow-y-scroll rounded-md " + styles.scrollbar}>
-                <div className="flex font-bold text-[3vh] drop-shadow-xl mb-6 items-center flex-wrap">
-                    Fünftages-Vorraussage für&nbsp;<div className='text-green-700'>{replacePlus(name)}</div>
+                <div className="flex font-bold text-[3vh] drop-shadow-xl mb-6 items-center flex-wrap text-center">
+                    <span className='text-center'>Fünftages-Vorraussage für&nbsp;<div className='text-green-700'>{replacePlus(name)}</div></span>
                 </div>
                 <div className="max-h-full max-w-[75vw] w-[75vw]">
                     <div className="max-h-screen w-full flex justify-center items-end">

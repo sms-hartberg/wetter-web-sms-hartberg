@@ -138,6 +138,7 @@ export function getWMOText(wmo: number[]) {
             case 93:
             case 96:
             case 97:
+            case 95:
                 wmoText.push(WMOCode.THUNDERSTORM);
                 break;
 

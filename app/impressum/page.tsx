@@ -30,7 +30,7 @@ const Impressum = () => {
                             <b>Rechtliches</b><br/>
                             Das Hintergrundbild auf der Such- und Ergebnisseite wurde auf <a href='https://www.pixabay.com/'>Pixabay</a> erworben und fällt somit in die Pixbay Content License.
                             Die SVG-Icons auf der Ergebnisseite, die unter anderem die Wetterbedingungen bildlich veranschaulichen, werden vom Projekt <a href="https://github.com/react-icons/react-icons">React Icons</a> verwendet
-                            und sind laut Lizenz frei verwendbar.
+                            und sind laut Lizenz <a href='https://openfontlicense.org/'>SIL OFL 1.1</a> frei verwendbar.
                             <br/><br/>
                             Die Inhalte und externen Links sowie externen Hyperlinks auf dieser Webseite wurden sorgfältig untersucht, jedoch übernehmen Ersteller sowie Betreiber dieser Webseite KEINE Haftung für diese. Für die verlinkten
                             Inhalte sind ausschließlich deren Betreiber verantwortlich.

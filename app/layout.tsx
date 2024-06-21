@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "WE ather",
+  title: "Wetter Projekt",
   description: "Free Weather Application - Not for commerical use!",
 };
 

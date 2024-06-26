@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp, getAverageWMO, getDate } from '../api/functions'
+import { WeatherData, returnIcon, returnText, WMOCode, getMinMaxTemp, getAverageWMO, getDate, formatDate, returnWeekday } from '../api/functions'
 
 interface componentProps {
     data: WeatherData,
@@ -12,6 +12,7 @@ const WeatherPanelSmall = ({ data, avgData, day, wmoText } : componentProps) => 
 
     const [dayText, setDayText] = useState("");
     const [date, setDate] = useState("01.01.1970");
+    const [weekday, setWeekday] = useState("UNAVAILABLE");
 
     useEffect(() => {
         switch(day){
@@ -23,14 +24,14 @@ const WeatherPanelSmall = ({ data, avgData, day, wmoText } : componentProps) => 
                 setDayText("UNAVAILABLE");
                 break;
         }
-
-        setDate(getDate(day ,data));
+        setDate(formatDate(data.time.at(getDate(day ,data))!));
+        setWeekday(returnWeekday(date));
     }, [day, data]);
 
     return (
         <div className='flex flex-col max-w-full w-full bg-slate-700 bg-opacity-80 rounded-2xl p-4 mt-4'>
             <div className='text-2xl font-bold text-gray-300 pb-4'>
-                {dayText !== "UNAVAILABLE" ? <>{dayText}&nbsp;|&nbsp;{date}</> : <>{date}</>}
+                {dayText !== "UNAVAILABLE" ? <>{dayText}&nbsp;|&nbsp;{date}</> : <>{weekday}&nbsp;|&nbsp;{date}</>}
             </div>
             <div className='flex flex-col text-xl font-semibold text-gray-300'>
                 <div className='max-w-full w-full flex'>

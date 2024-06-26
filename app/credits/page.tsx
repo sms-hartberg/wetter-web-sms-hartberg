@@ -10,7 +10,7 @@ const Credits = () => {
                 <div className='m-auto'>
                     <div>
                         <p className='font-extrabold'>ENTWICKLER</p>
-                        Schüler Tobias Schweighofer<br/><br/>
+                        Tobias Schweighofer (Schüler)<br/><br/>
                         <p className='font-extrabold'>MITWIRKENDE</p>
                         Dipl.-Päd. Margit Großschedl<br/>
                         Mathias Neuherz, BEd<br/>

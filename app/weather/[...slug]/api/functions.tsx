@@ -388,16 +388,27 @@ export function getAverageWMO(wmocode: WMOCode[], day: number): WMOCode {
     return mostCommonNumber;
 }
 
-export function getDate(dayIndex: number, data: WeatherData): string {
+export function getDate(dayIndex: number, data: WeatherData): number {
     let startingVal = getStartingVal(dayIndex);
     
-    return(formatDate(data.time.at(startingVal)!));
+    return(startingVal);
 }
 
-function formatDate(unformattedDate: string){
+export function formatDate(unformattedDate: string){
     unformattedDate = unformattedDate.substring(0, unformattedDate.indexOf("T"));
     let dateArray = unformattedDate.split("-");
     let formattedDate = dateArray.at(2) + "." + dateArray.at(1) + "." + dateArray.at(0);
 
     return formattedDate;
+}
+
+export function returnWeekday(dateStr: string){
+    const dateArray = dateStr.split(".");
+    const weekdays = ["SONNTAG", "MONTAG", "DIENSTAG", "MITTWOCH", "DONNERSTAG", "FREITAG", "SAMSTAG"]
+    const month = parseInt(dateArray[1]) - 1;
+    const day = parseInt(dateArray[0]);
+    const year = parseInt(dateArray[2]);
+
+    const date = new Date(year, month, day);
+    return weekdays[date.getDay()];
 }

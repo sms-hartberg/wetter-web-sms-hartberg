@@ -25,7 +25,7 @@ const WeatherPanelSmall = ({ data, avgData, day, wmoText } : componentProps) => 
                 break;
         }
         setDate(formatDate(data.time.at(getDate(day ,data))!));
-        setWeekday(returnWeekday(date));
+        setWeekday(returnWeekday(formatDate(data.time.at(getDate(day ,data))!)));
     }, [day, data]);
 
     return (

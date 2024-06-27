@@ -10,8 +10,7 @@ const SearchElement = () => {
     
     async function fetchCities(cityname: string) {
         cityname = cityname.replace(/\s/g, "+");
-        console.log(cityname)
-
+        
         const response = await fetch("https://geocoding-api.open-meteo.com/v1/search?name=" + cityname + "&count=10&language=en&format=json");
         
         return(response.json());
